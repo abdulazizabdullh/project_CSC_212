@@ -1,81 +1,88 @@
-
 public class LinkedList<T> implements List<T> {
     private Node<T> head;
     private int size;
 
-    
+
     public void insert(T data) {
         Node<T> newNode = new Node<>(data);
         if (head == null) {
             head = newNode;
         } else {
-            Node<T> current = head;
-            while (current.next != null) {
-                current = current.next;
+            Node<T> tmp = head;
+            while (tmp.next != null) {
+                tmp = tmp.next;
             }
-            current.next = newNode;
+            tmp.next = newNode;
         }
         size++;
     }
 
     public boolean contains(T data) {
-        Node<T> current = head;
-        while (current != null) {
-            if (current.data.equals(data)) {
+        Node<T> tmp = head;
+        while (tmp != null) {
+            if (tmp.data.equals(data)) {
                 return true;
             }
-            current = current.next;
+            tmp = tmp.next;
         }
         return false;
     }
 
-   
+
     public T get(int index) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+        if (index >= size) {
+            return null;
         }
-        Node<T> current = head;
+
+        if (index < 0) {
+            return null;
+        }
+        Node<T> tmp = head;
         for (int i = 0; i < index; i++) {
-            current = current.next;
+            tmp = tmp.next;
         }
-        return current.data;
+        return tmp.data;
     }
 
     public List<T> retainAll(List<T> other) {
         LinkedList<T> result = new LinkedList<>();
-        Node<T> current = head;
-        while (current != null) {
-            if (other.contains(current.data)) {
-                result.insert(current.data);
+        Node<T> tmp = head;
+        while (tmp != null) {
+            if (other.contains(tmp.data)) {
+                result.insert(tmp.data);
             }
-            current = current.next;
+            tmp = tmp.next;
         }
         return result;
     }
 
-    
+
     public int size() {
         return size;
     }
 
     public void set(int index, T data) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+        if (index >= size) {
+            return;
         }
-        Node<T> current = head;
+
+        if (index < 0) {
+            return;
+        }
+        Node<T> tmp = head;
         for (int i = 0; i < index; i++) {
-            current = current.next;
+            tmp = tmp.next;
         }
-        current.data = data;  // Update the data at the specified index
+        tmp.data = data;  // Update the data at the specified index
     }
 
     public void printList() {
-        Node<T> current = head;
+        Node<T> tmp = head;
         System.out.print("{");
-        while (current != null) {
-            System.out.print(current.data);
-            current = current.next;
-            if (current != null) {
+        while (tmp != null) {
+            System.out.print(tmp.data);
+            tmp = tmp.next;
+            if (tmp != null) {
                 System.out.print(", ");
             }
         }

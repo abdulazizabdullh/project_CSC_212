@@ -21,12 +21,12 @@ public class DocumentProcessor {
         LinkedList<String> words = new LinkedList<>();
         String[] tokens = document.toLowerCase().replaceAll("[^a-zA-Z0-9 ]", "").split("\\s+");
         for (int i = 0; i < tokens.length; i++) {
-        	String token = tokens[i];
+            String token = tokens[i];
             if (!stopWords.contains(token) && !token.isEmpty()) {
                 words.insert(token);
+
             }
         }
         return words;
     }
 }
-

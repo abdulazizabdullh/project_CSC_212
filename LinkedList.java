@@ -73,19 +73,8 @@ public class LinkedList<T> implements List<T> {
         for (int i = 0; i < index; i++) {
             tmp = tmp.next;
         }
-        tmp.data = data;  // Update the data at the specified index
+        tmp.data = data;
     }
 
-    public void printList() {
-        Node<T> tmp = head;
-        System.out.print("{");
-        while (tmp != null) {
-            System.out.print(tmp.data);
-            tmp = tmp.next;
-            if (tmp != null) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("}");
-    }
+
 }

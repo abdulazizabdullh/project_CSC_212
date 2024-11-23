@@ -14,7 +14,6 @@ public class InvertedIndex {
         for (int i = 0; i < invertedIndex.size(); i++) {
             WordNode node = invertedIndex.get(i);
             if (node.word.equals(word)) {
-                // Add the document ID to the existing word node if not already present
                 if (!node.docIDs.contains(docID)) {
                     node.docIDs.insert(docID);
                 }
@@ -22,7 +21,6 @@ public class InvertedIndex {
                 break;
             }
         }
-        // If the word is not found, create a new node
         if (!found) {
             LinkedList<Integer> docs = new LinkedList<>();
             docs.insert(docID);

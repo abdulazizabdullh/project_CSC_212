@@ -67,7 +67,7 @@ public class QueryProcessor {
 
         LinkedList<Integer> result = new LinkedList<>();
         if (wordDocs == null) {
-            return result; // Return empty result if the word is not found
+            return result;
         }
 
         for (int i = 0; i < list.size(); i++) {
@@ -134,7 +134,6 @@ public class QueryProcessor {
             LinkedList<Integer> inreResult = new LinkedList<>();
 
             if (operator2.equals("AND")) {
-                // Evaluate the AND part first
                 inreResult = queryProcessor.andQuery(word2, word3);
                 if (operator1.equals("OR")) {
                     result = queryProcessor.orQuery(inreResult, word1);
@@ -145,11 +144,11 @@ public class QueryProcessor {
                     return;
                 }
             } else if (operator1.equals("AND")) {
-                // Evaluate the first AND
+
                 inreResult = queryProcessor.andQuery(word1, word2);
                 result = queryProcessor.orQuery(inreResult, word3);
             } else if (operator1.equals("OR")) {
-                // Evaluate OR first if no AND follows
+
                 inreResult = queryProcessor.orQuery(word1, word2);
                 result = queryProcessor.orQuery(inreResult, word3);
             } else {
@@ -185,20 +184,18 @@ public class QueryProcessor {
         printRankedResults(query, rankedResults);
     }
 
-    // Perform Ranked Retrieval for InvertedIndex
     public void processRankedQuery(String query, InvertedIndex index) {
         String[] words = query.toLowerCase().split(" ");
         LinkedList<DocumentScore> rankedResults = new LinkedList<>();
 
-        // Iterate through each word in the query
         for (int i = 0; i < words.length; i++) {
             String word = words[i];
             LinkedList<Integer> docIDs = index.search(word);
+
             for (int j = 0; j < docIDs.size(); j++) {
                 int docID = docIDs.get(j);
                 boolean found = false;
 
-                // Update the score for existing document scores
                 for (int x = 0; x < rankedResults.size(); x++) {
                     DocumentScore ds = rankedResults.get(x);
                     if (ds.docID == docID) {
@@ -207,8 +204,6 @@ public class QueryProcessor {
                         break;
                     }
                 }
-
-                // If document score not found, create a new one
                 if (!found) {
                     rankedResults.insert(new DocumentScore(docID, 1));
                 }
@@ -219,12 +214,10 @@ public class QueryProcessor {
         printRankedResults(query, rankedResults);
     }
 
-    // Perform Ranked Retrieval for InvertedIndexBST
     public void processRankedQuery(String query, InvertedIndexBST index) {
         String[] words = query.toLowerCase().split(" ");
         LinkedList<DocumentScore> rankedResults = new LinkedList<>();
 
-        // Iterate through each word in the query
         for (int i = 0; i < words.length; i++) {
             String word = words[i];
             LinkedList<Integer> docIDs = index.search(word);
@@ -232,7 +225,6 @@ public class QueryProcessor {
                 int docID = docIDs.get(j);
                 boolean found = false;
 
-                // Update the score for existing document scores
                 for (int x = 0; x < rankedResults.size(); x++) {
                     DocumentScore ds = rankedResults.get(x);
                     if (ds.docID == docID) {
@@ -242,7 +234,6 @@ public class QueryProcessor {
                     }
                 }
 
-                // If document score not found, create a new one
                 if (!found) {
                     rankedResults.insert(new DocumentScore(docID, 1));
                 }
@@ -253,8 +244,7 @@ public class QueryProcessor {
         printRankedResults(query, rankedResults);
     }
 
-    // Helper method to count occurrences of a word in a document
-    public int countOccurrences(LinkedList<String> words, String word) {
+    private int countOccurrences(LinkedList<String> words, String word) {
         int count = 0;
         for (int i = 0; i < words.size(); i++) {
             if (words.get(i).equals(word)) {
@@ -264,11 +254,10 @@ public class QueryProcessor {
         return count;
     }
 
-    // Sort ranked results by score in descending order
-    public void sortRankedResults(LinkedList<DocumentScore> list) {
+    private void sortRankedResults(LinkedList<DocumentScore> list) {
         for (int i = 0; i < list.size(); i++) {
-            for (int j = i + 1; j < list.size(); j++) {
-                if (list.get(i).score < list.get(j).score) {
+            for (int j = 0; j < list.size(); j++) {
+                if (list.get(i).score > list.get(j).score) {
                     DocumentScore temp = list.get(i);
                     list.set(i, list.get(j));
                     list.set(j, temp);
@@ -277,8 +266,7 @@ public class QueryProcessor {
         }
     }
 
-    // Print the ranked retrieval results
-    public void printRankedResults(String query, LinkedList<DocumentScore> rankedResults) {
+    private void printRankedResults(String query, LinkedList<DocumentScore> rankedResults) {
         System.out.println("Ranked Retrieval Results: '" + query + "'");
         for (int i = 0; i < rankedResults.size(); i++) {
             DocumentScore result = rankedResults.get(i);
@@ -287,7 +275,7 @@ public class QueryProcessor {
     }
 
 
-    public void printFormattedResult(String query, LinkedList<Integer> result) {
+    private void printFormattedResult(String query, LinkedList<Integer> result) {
         System.out.print("Q: " + query + "\nResult: {");
         for (int i = 0; i < result.size(); i++) {
             System.out.print(result.get(i));

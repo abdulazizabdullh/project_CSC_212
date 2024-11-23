@@ -5,5 +5,5 @@ public interface List<T> {
     public List<T> retainAll(List<T> other);
     public int size();
     public void set(int index, T data);
-    public void printList();
+
 }

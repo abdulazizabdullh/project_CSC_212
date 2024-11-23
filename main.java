@@ -36,12 +36,15 @@ public class main {
             identify = 0;
             while ((line = br.readLine()) != null) {
                 LinkedList<String> words = processor.processDocument(line);
-                index.addDocument(docID, words);
-                for (int j = 0; j < words.size(); j++) {
-                    String word = words.get(j);
+                if (words.size() > 0) {
+                    String firstWord = words.get(0);
+                    firstWord = firstWord.replaceAll("^[0-9]+", "");
+                    words.set(0, firstWord);
                 }
+                index.addDocument(docID, words);
                 docID++;
             }
+
             br.close();
         } else if (indexChoice == 2) {
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
@@ -51,12 +54,20 @@ public class main {
             queryProcessor = new QueryProcessor(invertedIndex);
             while ((line = br.readLine()) != null) {
                 LinkedList<String> words = processor.processDocument(line);
+                if (words.size() > 0) {
+                    String firstWord = words.get(0);
+                    firstWord = firstWord.replaceAll("^[0-9]+", "");
+                    words.set(0, firstWord);
+                }
+
                 for (int j = 0; j < words.size(); j++) {
                     String word = words.get(j);
                     invertedIndex.addDocument(docID, word);
                 }
+
                 docID++;
             }
+
             br.close();
         } else if (indexChoice == 3) {
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
@@ -66,12 +77,19 @@ public class main {
             queryProcessor = new QueryProcessor(invertedIndexBST);
             while ((line = br.readLine()) != null) {
                 LinkedList<String> words = processor.processDocument(line);
+                if (words.size() > 0) {
+                    String firstWord = words.get(0);
+                    firstWord = firstWord.replaceAll("^[0-9]+", "");
+                    words.set(0, firstWord);
+                }
                 for (int j = 0; j < words.size(); j++) {
                     String word = words.get(j);
                     invertedIndexBST.addDocument(docID, word);
                 }
+
                 docID++;
             }
+
             br.close();
         } else {
             System.out.println("Invalid.");
